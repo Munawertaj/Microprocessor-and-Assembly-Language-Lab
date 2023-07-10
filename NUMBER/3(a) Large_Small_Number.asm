@@ -4,7 +4,8 @@
 .DATA
 
 NEWLINE DB 0AH,0DH,'$'
-NUMBER DB 30 DUP('$')
+NUMBER DB 30 DUP('$')  ; Declaring an array of size 30, initialize each value by '$'
+MSG DB "Enter numbers[0~9] without space: $"
 MSG1 DB "Smallest Number : $"
 MSG2 DB "largest Number : $"
 
@@ -17,9 +18,14 @@ MAIN PROC
     MOV AX , @DATA
     MOV DS , AX
     
+    ;Printing Input message
+    MOV AH , 9
+    LEA DX , MSG
+    INT 21H
+    
     ;TAKING INPUT
-    MOV SI , 0
     MOV AH , 1
+    MOV SI , 0
     INPUT:
         INT 21H
         CMP AL , 0DH
@@ -38,7 +44,7 @@ MAIN PROC
     FIND:
         MOV DL , NUMBER[DI]
         INC DI
-        CMP DL , '$'
+        CMP DL , '$' ; Checking last character 
         JE END_FIND
         
         CMP DL , SMALL
@@ -73,7 +79,6 @@ MAIN PROC
         LEA DX , NEWLINE
         INT 21H
         
-        MOV AH , 9
         LEA DX , MSG2
         INT 21H
         
@@ -84,6 +89,6 @@ MAIN PROC
     EXIT:
         MOV AH , 4CH
         INT 21H
-    MAIN ENDP
+        MAIN ENDP
 
 END MAIN
