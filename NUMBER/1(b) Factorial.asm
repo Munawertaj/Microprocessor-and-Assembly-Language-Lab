@@ -38,7 +38,7 @@ MAIN PROC
     FACTORIAL:
         CMP BL , 0
         JE OUTPUT
-        MUL BL  ;It will perform AL*BL and store it to AX
+        MUL BL  ;It will perform AL*BL and result will be stored at AX
         DEC BL
         JMP FACTORIAL
     
